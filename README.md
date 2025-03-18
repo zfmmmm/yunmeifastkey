@@ -1,16 +1,23 @@
-# yunmeifastkey
+# 云莓闪开
+❶ 权限准备
+✅ 首次开启需授权：  
+「蓝牙」连接门锁 | 「位置/WiFi」环境感知  
+（权限仅用于门锁交互 永不后台采集）
 
-A new Flutter project.
+❷ 极速模式激活  
+🏃♂️ 到达宿舍楼时：  
+1. 打开APP 
+2. 切换至后台运行（无需保持界面开启）  
+3. 继续正常使用手机  
 
-## Getting Started
+❸ 秒开操作流程  
+🚪 到达寝室门口时：  
+1. 点击APP内开门按钮 → 触发开锁  
+（全程无需停留等待）
+2.当开启打开应用自动开锁选项时，点击app会自动连接开锁，开锁速度受手机本身初始化速度影响
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+❹ 节能必选项  
+🔋 完成开门后：  
+• 上划/退出程序彻底关闭后台  
+• 下次使用前重新激活即可  
+（保持此习惯可维持毫秒级响应，不杀后台会慢2-3秒）
