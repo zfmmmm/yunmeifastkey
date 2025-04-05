@@ -436,22 +436,3 @@ Uint8List generatePassword(String secret) {
 
   return bos.toBytes();
 }
-// Uint8List generatePassword(String secret) {
-//   int pw = (DateTime.now().millisecondsSinceEpoch ~/ 1000) % 1000000;
-//   List<int> password = [];
-
-//   password.add(0xD0);
-//   password.add(secret.length + 14);
-//   password.addAll(secret.codeUnits);
-//   password.add(0xA5);
-
-//   for (int i = 0; i < 6; i++) {
-//     password.add(pw % 10);
-//     pw ~/= 10;
-//   }
-
-//   password.addAll([0x49, 0x44, 0x30, 0x31]);
-//   password.add(0xA7);
-
-//   return Uint8List.fromList(password);
-// }
