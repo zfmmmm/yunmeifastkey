@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
 import 'info_screen.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -395,21 +396,62 @@ class _DoorOpenerScreenState extends State<DoorOpenerScreen> {
 }
 
 Uint8List generatePassword(String secret) {
-  int pw = (DateTime.now().millisecondsSinceEpoch ~/ 1000) % 1000000;
-  List<int> password = [];
+  final bos = BytesBuilder();
 
-  password.add(0xD0);
-  password.add(secret.length + 14);
-  password.addAll(secret.codeUnits);
-  password.add(0xA5);
+  // Write fixed byte 208
+  bos.addByte(208);
 
+  // Calculate length: secret.length + 14 (consistent with Java code)
+  int len = secret.length + 14;
+  bos.addByte(len);
+
+  // Write secret bytes
+  final secretBytes = secret.codeUnits;
+  for (var byte in secretBytes) {
+    bos.addByte(byte);
+  }
+
+  // Write fixed byte 165
+  bos.addByte(165);
+
+  // Generate 6-digit random number (0 to 999999)
+  final random = Random();
+  int pw = random.nextInt(1000000);
+
+  // Write each digit of pw (low to high)
   for (int i = 0; i < 6; i++) {
-    password.add(pw % 10);
+    int digit = pw % 10;
+    bos.addByte(digit);
     pw ~/= 10;
   }
 
-  password.addAll([0x49, 0x44, 0x30, 0x31]);
-  password.add(0xA7);
+  // Write fixed byte sequence: 73, 68, 48, 49 (ASCII "ID01")
+  bos.addByte(73);
+  bos.addByte(68);
+  bos.addByte(48);
+  bos.addByte(49);
 
-  return Uint8List.fromList(password);
+  // Write fixed byte 167
+  bos.addByte(167);
+
+  return bos.toBytes();
 }
+// Uint8List generatePassword(String secret) {
+//   int pw = (DateTime.now().millisecondsSinceEpoch ~/ 1000) % 1000000;
+//   List<int> password = [];
+
+//   password.add(0xD0);
+//   password.add(secret.length + 14);
+//   password.addAll(secret.codeUnits);
+//   password.add(0xA5);
+
+//   for (int i = 0; i < 6; i++) {
+//     password.add(pw % 10);
+//     pw ~/= 10;
+//   }
+
+//   password.addAll([0x49, 0x44, 0x30, 0x31]);
+//   password.add(0xA7);
+
+//   return Uint8List.fromList(password);
+// }
